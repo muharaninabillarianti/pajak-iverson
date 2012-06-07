@@ -21,10 +21,10 @@ class Welcome extends CI_Controller {
      * @see http://codeigniter.com/user_guide/general/urls.html
      */
     public function index() {
-        $this->session->set_userdata('CURRENT_USER', 'Ini Data di Session');
+        $this->session->set_userdata('CURRENT_USER','Ini Data di Session');
         $this->load->helper('url');
         $layout['title'] = "Welcome";
-        $layout['content'] = $this->load->view('home', '', true);
+        $layout['content'] = $this->load->view('home','', true);
         $this->load->view('layout', $layout);
     }
 

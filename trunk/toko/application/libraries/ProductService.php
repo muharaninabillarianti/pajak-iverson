@@ -31,5 +31,5 @@ class ProductService {
         Product::delete($id);
     }
 }
- 
+
 ?>

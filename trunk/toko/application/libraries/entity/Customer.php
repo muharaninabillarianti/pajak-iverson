@@ -108,7 +108,8 @@ class Customer {
     public static function loads() {
         $conn = new Connection();
         $mysqli = $conn->getMysqli();
-        $stmt = $mysqli->prepare("SELECT id,nama,alamat,telp,email FROM customer");               
+        $stmt = $mysqli->prepare("SELECT id,nama,alamat,telp,email FROM customer");       
+        //$stmt->bind_param("i",$page);
         $stmt->execute();
         $stmt->bind_result($id,$nama,$alamat,$telp,$email);
         $customers = array();
