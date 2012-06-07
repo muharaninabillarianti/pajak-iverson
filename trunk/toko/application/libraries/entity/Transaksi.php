@@ -1,6 +1,7 @@
 <?php
 include_once 'Customer.php';
-
+include_once 'Connection.php';
+include_once 'TransaksiDetail.php';
 class Transaksi {
 
     private $id;
@@ -61,7 +62,70 @@ class Transaksi {
             array_push($this->transaksiDetail, $transaksi);
         }
     }
+    
+    public function save(){
+        $conn = new Connection();
+        $mysqli = $conn->getMysqli();   
+        $stmt = $mysqli->prepare("INSERT INTO transaksi(id,tanggal,customer_id,no_faktur)
+            VALUES(?,?,?)");
+        $stmt->bind_param("isis",$this->id,$this->tanggal,$this->customer->getId(),
+                $this->faktur);
+        $stmt->execute();
+        foreach ($this->transaksiDetail as $detail) {
+            $stmt2 = $mysqli->prepare("INSERT INTO transaksi_detail(transaksi_id,
+                product_id,qty,price) VALUES(?,?,?,?)");
+            $stmt2->bind_param("iiid",$this->id,$detail->getProduct()->getId(),
+                    $detail->getId(),$detail->getPrice());
+            $stmt2->execute();
+            $stmt2->close();
+        }
+        $stmt->close();
+        $mysqli->close();        
+    }
+    
+    public static function load($id){
+        $conn = new Connection();
+        $mysqli = $conn->getMysqli();  
+        $stmt = $mysqli->prepare("SELECT id,tanggal,customer_id,no_faktur 
+            FROM transaksi WHERE id=?");
+        $stmt->bind_param("i",$id);
+        $stmt->execute();
+        $stmt->bind_result($id,$tanggal,$customer_id,$no_faktur);
+        $trans = null;
+        if($r = $stmt->fetch()){
+            $trans = new Transaksi();
+            $trans->setId($id);
+            $trans->setTanggal($tanggal);
+            $trans->setCustomer(Customer::load($customer_id));
+            $trans->setFaktur($no_faktur); 
+            $trans->setTransaksiDetail(TransaksiDetail::loadByTransaksiId($id));
+        }
+        $stmt->close();
+        $mysqli->close();
+        return $trans;
+    }
 
+    public static function loads(){
+        $conn = new Connection();
+        $mysqli = $conn->getMysqli();  
+        $stmt = $mysqli->prepare("SELECT id,tanggal,customer_id,no_faktur 
+            FROM transaksi");       
+        $stmt->execute();
+        $stmt->bind_result($id,$tanggal,$customer_id,$no_faktur);
+        $trans = array();
+        while($r = $stmt->fetch()){
+            $transaksi = new Transaksi();
+            $transaksi->setId($id);
+            $transaksi->setTanggal($tanggal);
+            $transaksi->setCustomer(Customer::load($customer_id));
+            $transaksi->setFaktur($no_faktur); 
+            array_push($trans, $transaksi);
+        }
+        $stmt->close();
+        $mysqli->close();
+        return $trans;
+    }
+    
 }
 
 ?>

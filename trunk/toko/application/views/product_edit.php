@@ -1,5 +1,5 @@
 
-<h3>Edit New Product</h3>
+<h3>Edit Product</h3>
 <?php echo form_open('/products/update'); ?>
 <h5>Kode</h5>
 <?php echo form_error('kode'); ?>
@@ -15,5 +15,5 @@
        value="<?php echo $product->getPrice(); ?>" size="20" />
 <input type="hidden" name="id" 
        value="<?php echo $product->getId(); ?>">
-<div><input type="submit" value="Submit" /></div>
+<div><input type="submit" value="Update" /></div>
 </form>
