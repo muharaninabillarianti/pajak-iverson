@@ -1,4 +1,4 @@
-<p><?php echo anchor('customers/insert', 'Insert'); ?></p>
+<p><?php echo anchor('trans/insert', 'Insert'); ?></p>
 <?php $row=1; ?>
 <table border="1" >
     <tr>

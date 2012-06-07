@@ -9,7 +9,14 @@ class Customers extends CI_Controller {
 
     public function all() {
         $this->load->library('customerservice');
-        $this->load->library('pagination');        
+        $this->load->library('pagination');
+
+//        $config['base_url'] = '/toko/index.php/customers/all';
+//        $config['total_rows'] = 7;
+//        $config['per_page'] = 2;
+//        $this->pagination->initialize($config);
+
+//        $data['paging'] = $this->pagination->create_links();
         $data['customers'] = $this->customerservice->loadAllCustomer();
         $layout['title'] = "Daftar Customer";
         $layout['content'] = $this->load->view('customer_list', $data, true);
