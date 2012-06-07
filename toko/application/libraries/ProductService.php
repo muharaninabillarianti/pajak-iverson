@@ -26,6 +26,10 @@ class ProductService {
     public function loadById($id){
         return Product::load($id);
     }
+    
+    public function deleteById($id){
+        Product::delete($id);
+    }
 }
-
+ 
 ?>

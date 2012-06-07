@@ -45,7 +45,7 @@ class Product {
     
     public function save(){
         $conn = new Connection();
-        $mysqli = $conn->getMysqli();
+        $mysqli = $conn->getMysqli();        
         $stmt = $mysqli->prepare("INSERT INTO product(kode,nama,price) VALUES(?,?,?)");
         $stmt->bind_param("ssd",$this->kode,$this->nama,$this->price);
         $stmt->execute();

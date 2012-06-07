@@ -3,15 +3,14 @@
 class Products extends CI_Controller {
 
     public function index() {
-        //$this->load->helper('url');
-        $this->load->helper('url');        
+        $this->load->helper('url');
         return $this->all();
     }
 
-    public function all() {
+    public function all() {       
         $this->load->library('productservice');
         $data['products'] = $this->productservice->loadAllProduct();
-        $layout['title'] = "Daftar Product";
+        $layout['title'] =  'Daftar Product';
         $layout['content'] = $this->load->view('product_list', $data, true);
         $this->load->view('layout', $layout);
     }
@@ -21,10 +20,10 @@ class Products extends CI_Controller {
             $id = $this->uri->segment(3);
         $this->load->helper(array('form', 'url'));
         $this->load->library('productservice');
-        
+
         $data['product'] = $this->productservice->loadById($id);
         $layout['title'] = "Edit Product";
-        $layout['content'] = $this->load->view('product_edit', $data,true);
+        $layout['content'] = $this->load->view('product_edit', $data, true);
         $this->load->view('layout', $layout);
     }
 
@@ -40,7 +39,7 @@ class Products extends CI_Controller {
 
         if ($this->form_validation->run() == FALSE) {
             $layout['title'] = "Insert Product";
-            $layout['content'] = $this->load->view('product_new','',true);
+            $layout['content'] = $this->load->view('product_new', '', true);
             $this->load->view('layout', $layout);
         } else {
             $this->load->library('productservice');
@@ -51,7 +50,8 @@ class Products extends CI_Controller {
             $price = $this->input->post('price');
             $this->productservice->insertProduct($kode, $nama, $price);
 
-            return $this->all();
+            //return $this->all();
+            $this->output->set_header("Location: /toko/index.php/products");
         }
     }
 
@@ -65,7 +65,7 @@ class Products extends CI_Controller {
         $this->form_validation->set_error_delimiters
                 ('<font color=\'red\'>', '</font><br>');
 
-        if ($this->form_validation->run() == FALSE) {   
+        if ($this->form_validation->run() == FALSE) {
             return $this->edit($this->input->post('id'));
         } else {
             $this->load->library('productservice');
@@ -77,8 +77,18 @@ class Products extends CI_Controller {
             $price = $this->input->post('price');
             $this->productservice->updateProduct($id, $kode, $nama, $price);
 
-            return $this->all();
+            //return $this->all();
+            $this->output->set_header("Location: /toko/index.php/products");
         }
+    }
+
+    public function delete($id = null) {
+        if ($id == NULL)
+            $id = $this->uri->segment(3);
+        $this->load->helper('url');
+        $this->load->library('productservice');
+        $this->productservice->deleteById($id);
+        $this->output->set_header("Location: /toko/index.php/products");
     }
 
 }
