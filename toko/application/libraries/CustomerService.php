@@ -1,6 +1,7 @@
 <?php
 
 include_once 'entity/Customer.php';
+
 class CustomerService {
     
     public function insertCustomer($nama,$alamat,$telp,$email){
@@ -21,6 +22,15 @@ class CustomerService {
         return Customer::loads();
     }
     
+    public function countRow(){
+        return Customer::countRow();
+    }
+    
+    public function loadCustomerByPage($page){
+        return Customer::loadsByPage($page);
+    }
+
+
     public function loadById($id){
         return Customer::load($id);
     }

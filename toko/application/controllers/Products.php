@@ -7,10 +7,10 @@ class Products extends CI_Controller {
         return $this->all();
     }
 
-    public function all() {       
+    public function all() {
         $this->load->library('productservice');
         $data['products'] = $this->productservice->loadAllProduct();
-        $layout['title'] =  'Daftar Product';
+        $layout['title'] = 'Daftar Product';
         $layout['content'] = $this->load->view('product_list', $data, true);
         $this->load->view('layout', $layout);
     }
@@ -31,6 +31,15 @@ class Products extends CI_Controller {
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
 
+        $config['upload_path'] = './uploads/';
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['max_size'] = '100';
+        $config['max_width'] = '1024';
+        $config['max_height'] = '768';
+
+        $this->load->library('upload', $config);
+
+
         $this->form_validation->set_rules('kode', 'Kode', 'required');
         $this->form_validation->set_rules('nama', 'Nama', 'required');
         $this->form_validation->set_rules('price', 'Price', 'required');
@@ -43,14 +52,14 @@ class Products extends CI_Controller {
             $this->load->view('layout', $layout);
         } else {
             $this->load->library('productservice');
-            //$this->productservice->insertProduct(set_value('kode'),
-            //        set_value('nama'), set_value('price'));
             $kode = $this->input->post('kode');
             $nama = $this->input->post('nama');
             $price = $this->input->post('price');
-            $this->productservice->insertProduct($kode, $nama, $price);
-
-            //return $this->all();
+            if ($this->upload->do_upload()) {
+                echo $this->upload->display_errors();
+                $image = $this->upload->data(3);
+                $this->productservice->insertProduct($kode, $nama, $price, $image);
+            }
             $this->output->set_header("Location: /toko/index.php/products");
         }
     }

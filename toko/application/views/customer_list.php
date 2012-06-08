@@ -1,5 +1,4 @@
 <p><?php echo anchor('customers/insert', 'Insert'); ?></p>
-<?php $row=1; ?>
 <table border="1" >
     <tr>
         <td>No.</td>
@@ -8,12 +7,12 @@
         <td>Telp</td>
         <td>Email</td>
         <td>Edit</td>
-        <td>Hapus</td>
+        <td>Delete</td>
     </tr>
     <?php foreach ($customers as $cust) { ?>
         <tr>    
-            <td><?php echo $row++; ?></td>
-            <td><?php echo $cust->getNama(); ?></td>
+            <td><?php echo ++$row; ?></td>
+            <td><?php echo $this->encrypt->decode($cust->getNama()); ?></td>
             <td><?php echo $cust->getAlamat(); ?></td>
             <td><?php echo $cust->getTelp(); ?></td>
             <td><?php echo $cust->getEmail(); ?></td>
@@ -22,5 +21,5 @@
         </tr>
     <?php } ?>
 </table>
-
+<p><?php echo $paging; ?></p>
 <br><br><br><br><br><br>
