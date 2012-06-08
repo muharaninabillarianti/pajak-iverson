@@ -7,17 +7,22 @@ class Customers extends CI_Controller {
         return $this->all();
     }
 
-    public function all() {
+    public function all($page = null) {
+        //$this->output->cache(30);
+        $this->load->helper('url');
         $this->load->library('customerservice');
-        $this->load->library('pagination');
-
-//        $config['base_url'] = '/toko/index.php/customers/all';
-//        $config['total_rows'] = 7;
-//        $config['per_page'] = 2;
-//        $this->pagination->initialize($config);
-
-//        $data['paging'] = $this->pagination->create_links();
-        $data['customers'] = $this->customerservice->loadAllCustomer();
+        $this->load->library(array('pagination','encrypt'));
+        if ($page == null)
+            $page = 0;
+        else
+            $page = $this->uri->segment(3);
+        $config['base_url'] = '/toko/index.php/customers/all';
+        $config['total_rows'] = $this->customerservice->countRow();
+        $config['per_page'] = 5;
+        $this->pagination->initialize($config);
+        $data['row'] = $page;
+        $data['paging'] = $this->pagination->create_links();
+        $data['customers'] = $this->customerservice->loadCustomerByPage($page);
         $layout['title'] = "Daftar Customer";
         $layout['content'] = $this->load->view('customer_list', $data, true);
 
@@ -41,8 +46,9 @@ class Customers extends CI_Controller {
             $layout['content'] = $this->load->view('customer_new', '', true);
             $this->load->view('layout', $layout);
         } else {
-            $this->load->library('customerservice');
+            $this->load->library(array('customerservice','encrypt'));
             $nama = $this->input->post('nama');
+            $nama = $this->encrypt->encode($nama);
             $alamat = $this->input->post('alamat');
             $telp = $this->input->post('telp');
             $email = $this->input->post('email');

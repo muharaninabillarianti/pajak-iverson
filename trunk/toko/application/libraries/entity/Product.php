@@ -7,13 +7,23 @@ class Product {
     private $kode;
     private $nama;
     private $price;
+    private $image;
     
-    public function __construct($id,$kode,$nama,$price) {
+    public function __construct($id,$kode,$nama,$price,$image) {
         $this->id = $id;
         $this->kode = $kode;
         $this->nama = $nama;
         $this->price = $price;
+        $this->image = $image;
     }
+    
+    public function setImage($image){
+        $this->image = $image;
+    }
+    public function getImage($image){
+        return $this->image;
+    }
+    
     
     public function getId(){
         return $this->id;
@@ -46,8 +56,8 @@ class Product {
     public function save(){
         $conn = new Connection();
         $mysqli = $conn->getMysqli();        
-        $stmt = $mysqli->prepare("INSERT INTO product(kode,nama,price) VALUES(?,?,?)");
-        $stmt->bind_param("ssd",$this->kode,$this->nama,$this->price);
+        $stmt = $mysqli->prepare("INSERT INTO product(kode,nama,price,image) VALUES(?,?,?,?)");
+        $stmt->bind_param("ssds",$this->kode,$this->nama,$this->price,$this->image);
         $stmt->execute();
         $stmt->close();
         $mysqli->close();
@@ -97,7 +107,7 @@ class Product {
         $stmt->bind_result($id,$kode,$nama,$price);
         $products = array();
         while($r = $stmt->fetch()){
-            $product = new Product($id, $kode, $nama, $price);
+            $product = new Product($id, $kode, $nama, $price,"");
             array_push($products, $product);
         }
         $stmt->close();
