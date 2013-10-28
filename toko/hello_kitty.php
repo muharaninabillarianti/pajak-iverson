@@ -11,4 +11,5 @@ echo "tambah lagi cuy"
 echo "apa ini"
 echo "apa lg ini"
 echo "acak2"
+echo "nambah file buat revert"
 ?>
