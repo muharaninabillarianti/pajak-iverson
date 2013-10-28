@@ -9,4 +9,5 @@ echo" tes"
 echo "hendrion"; echo "cilubakikuk ASBAK"
 echo "tambah lagi cuy"
 echo "apa ini"
+echo "apa lg ini"
 ?>
