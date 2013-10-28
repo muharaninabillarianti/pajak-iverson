@@ -10,3 +10,4 @@ dana
 dana
 dana
 dana
+ganteng
