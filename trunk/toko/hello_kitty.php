@@ -1,5 +1,11 @@
 <?php
 
-phpinfo();
+phpinfo(); echo "ini perubahan baru";
+echo "helo world";
+echo "coba nulis";
+echo "febi";
+echo "febi lg";
+echo" tes"
+echo "hendrion"; echo "cilubakikuk ASBAK"
 echo "tambah lagi cuy"
 ?>
