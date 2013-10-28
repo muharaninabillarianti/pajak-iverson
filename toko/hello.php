@@ -9,3 +9,10 @@ echo "hendro"; echo "cilubakikuk"
 echo "febby terus"
 ?>
 /* End of file hello.php */
+<<<<<<< .mine
+ok deh
+ok lagi ahhh 
+seeeep
+hasan
+=======
+>>>>>>> .r37
