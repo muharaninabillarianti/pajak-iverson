@@ -5,6 +5,6 @@ echo "coba nulis";
 echo "febi";
 echo "febi lg";
 echo" tes"
-echo "hendro"; echo "cilubakikuk"
+echo "hendriono"; echo "cilubakikuk"
 ;?>
 /* End of file hello.php */
