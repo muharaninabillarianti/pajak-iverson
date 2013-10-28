@@ -5,14 +5,8 @@ echo "coba nulis";
 echo "febi";
 echo "febi lg";
 echo" tes"
-echo "hendro"; echo "cilubakikuk"
-echo "febby terus"
-?>
+echo "hendrion"; echo "cilubakikuk"
+;?>
 /* End of file hello.php */
-<<<<<<< .mine
 ok deh
 ok lagi ahhh 
-seeeep
-hasan
-=======
->>>>>>> .r37
